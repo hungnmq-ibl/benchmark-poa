@@ -49,10 +49,8 @@ var delay = process.env.DELAY;
 var txPerSecond = process.env.TX;
 var index = process.env.INDEX;
 //////////////////////////////////////////////
-
+numTx = numTx + index
 var intervalId = setInterval(()=>{
-    var index = 0;
-    numTx = numTx + index
     for(var i = 0; i < txPerSecond; i++){
         console.log("Transaction index: ", index+1)
         sendTx(in_obj[index]).then()
