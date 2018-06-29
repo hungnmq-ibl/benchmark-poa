@@ -44,9 +44,9 @@ sendTx = async function (item) {
     })
 }
 //////////////////////////////////////////////
-var numTx = 3000;
-var delay = 1000;
-var txPerSecond = 300;
+var numTx = process.env.NUMTX;
+var delay = process.env.DELAY;
+var txPerSecond = process.env.TX;
 //////////////////////////////////////////////
 
 var intervalId = setInterval(()=>{
