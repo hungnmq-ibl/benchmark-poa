@@ -47,10 +47,12 @@ sendTx = async function (item) {
 var numTx = process.env.NUMTX;
 var delay = process.env.DELAY;
 var txPerSecond = process.env.TX;
+var index = process.env.INDEX;
 //////////////////////////////////////////////
 
 var intervalId = setInterval(()=>{
-    var index = 10000;
+    var index = 0;
+    numTx = numTx + index
     for(var i = 0; i < txPerSecond; i++){
         console.log("Transaction index: ", index+1)
         sendTx(in_obj[index]).then()
