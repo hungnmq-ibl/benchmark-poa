@@ -1,10 +1,9 @@
 var Web3 = require('web3')
-const web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+server = process.env.SERVER;
+const httpLink = 'http://'+ server + ':8545'
+const web3 = new Web3(new Web3.providers.HttpProvider(httpLink));
 var fs = require('fs');
 
-
-let privatekeys = []
-let addresses = []
 // number of address to generate
 var fileIndex = process.env.fileIndex
 var filename = 'account/accounts.' + fileIndex + '.json'
