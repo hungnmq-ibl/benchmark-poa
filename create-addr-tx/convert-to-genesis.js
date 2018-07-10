@@ -6,9 +6,12 @@ var fs = require('fs');
 let privatekeys = []
 let addresses = []
 // number of address to generate
-var fileIndex = process.env.fileIndex
-var filename = 'account/accounts.'+fileIndex+'.json'
-var filenameJson = 'account/accounts-json.'+fileIndex+'.json'
+// var fileIndex = process.env.fileIndex
+// var filename = 'account/accounts.'+fileIndex+'.json'
+// var filenameJson = 'account/accounts-json.'+fileIndex+'.json'
+
+var filename = 'account/accounts.json'
+var filenameJson = 'account/accounts-json.json'
 
 var in_obj = JSON.parse(fs.readFileSync(filename, 'utf8'));
 var in_obj_json = ""
