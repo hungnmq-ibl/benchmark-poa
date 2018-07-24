@@ -1,12 +1,9 @@
 var Web3 = require('web3')
-const httpLink = 'http://localhost:8545'
+server = process.env.SERVER;
+const httpLink = 'http://'+ server + ':8545'
 const web3 = new Web3(new Web3.providers.HttpProvider(httpLink));
 var fs = require('fs');
 
-
-let privatekeys = []
-let addresses = []
-// number of address to generate
 var fileIndex = process.env.fileIndex
 var filename = 'account/accounts.' + fileIndex + '.json'
 
@@ -22,7 +19,7 @@ createRawTransaction = async function (address, privateKey) {
             gas: 100000,
             to: address,
             chainId: 57195,
-            value: 1
+            value: "0x0000000000000001"
         },
         privateKey,
         function (err, res) {
@@ -38,17 +35,19 @@ createRawTransaction = async function (address, privateKey) {
 // createRawTransaction("0x3bfc665385e8885dc7FBedF5c6c6b9aed347e3b1", "0x73cea25a076eb03a36186fccc21d5dc1c80eb083fbba7d317fe6f0c32bed3053")
 sendTx = async function (item) {
     let rawTx = await createRawTransaction(item.address, item.privateKey)
+    rawTx = rawTx.rawTransaction
     return web3.eth.sendSignedTransaction(rawTx,function(err,res){
         if(err)
             console.log(err)
     })
 }
 //////////////////////////////////////////////
-var numTx = process.env.NUMTX;
-var delay = process.env.DELAY;
-var txPerSecond = process.env.TX;
-var index = process.env.INDEX;
+var numTx = parseInt(process.env.NUMTX);
+var delay = parseInt(process.env.DELAY);
+var txPerSecond = parseInt(process.env.TX);
+var index = parseInt(process.env.INDEX);
 //////////////////////////////////////////////
+console.log(typeof(numTx), typeof(delay), typeof(txPerSecond), typeof(index))
 numTx = numTx + index
 var intervalId = setInterval(()=>{
     for(var i = 0; i < txPerSecond; i++){
