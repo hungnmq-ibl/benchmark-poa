@@ -82,6 +82,36 @@ function sendTx(privateKey, dataRegister) {
 		})
 }
 
+function sendEthereumJsTx_RawTx() {
+	web3.eth.getTransactionCount("0xdda6ef2ff259928c561b2d30f0cad2c2736ce8b6", 'pending', function (err, res) {
+		var PRIVATE_ADDR = "65b7fb992f1f6bb683e6de4e788601b2b21dcf700e75fb0a87f6abf10a90b654"
+		var txParams = {
+			gasPrice: '0x10',
+			gasLimit: '0x4C4B40',
+			from: "0xdda6ef2ff259928c561b2d30f0cad2c2736ce8b6",
+			to: 0xdda6ef2ff259928c561b2d30f0cad2c2736ce8b6,
+			value: 0,
+			nonce: '0x' + res.toString(16)
+		};
+
+		// console.log(txParams);
+
+		// Transaction is created
+		var tx = new Tx(txParams);
+		var privKey = Buffer.from(PRIVATE_ADDR, 'hex');
+
+		// Transaction is signed
+		tx.sign(privKey);
+		var serializedTx = tx.serialize();
+		
+		web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex'))
+			.on('receipt', console.log);
+	})
+
+}
+
+
+
 function sendEthereumJsTx(dataRegister) {
 	web3.eth.getTransactionCount("0xdda6ef2ff259928c561b2d30f0cad2c2736ce8b6", 'pending', function (err, res) {
 		var PRIVATE_ADDR = "65b7fb992f1f6bb683e6de4e788601b2b21dcf700e75fb0a87f6abf10a90b654"
@@ -104,6 +134,7 @@ function sendEthereumJsTx(dataRegister) {
 		// Transaction is signed
 		tx.sign(privKey);
 		var serializedTx = tx.serialize();
+		console.log("Raw tx: ", '0x' + serializedTx.toString('hex'))
 		web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex'))
 			.on('receipt', console.log);
 	})
